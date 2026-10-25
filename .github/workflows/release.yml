@@ -63,9 +63,12 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: desktop-${{ matrix.target }}
-          path: |
-            artifacts/*
-            release/smoke-*.png
+          path: artifacts/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        with:
+          name: preview-${{ matrix.target }}
+          path: release/smoke-*.png
           if-no-files-found: error
   publish:
     needs: desktop
@@ -85,6 +88,7 @@ jobs:
           TAG=v$(node -p "require('./package.json').version")
           PRODUCT=$(node -p "require('./package.json').productName")
           COUNT=$(find artifacts -maxdepth 1 -type f \( -name '*.exe' -o -name '*.dmg' -o -name '*.AppImage' \) | wc -l)
+          echo "Verified native installers: $COUNT"
           test "$COUNT" -eq 6
           if gh release view "$TAG" >/dev/null 2>&1; then
             test "$(gh release view "$TAG" --json isDraft --jq .isDraft)" = true || { echo 'This version is already published. Bump package.json and product.json.'; exit 1; }
