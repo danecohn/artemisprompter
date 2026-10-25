@@ -1,0 +1,95 @@
+name: Build and publish six desktop apps
+on:
+  push:
+    branches: [main]
+    paths: ['core/**', 'desktop/**', 'src/**', 'assets/**', 'scripts/**', 'package*.json', 'product.json', '.github/workflows/release.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: desktop-release
+  cancel-in-progress: true
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with: {node-version: '24'}
+      - run: npm ci --ignore-scripts
+      - run: npm test
+      - run: npm run build
+  desktop:
+    needs: test
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {target: mac-arm64, runner: macos-15, args: '--mac --arm64'}
+          - {target: mac-x64, runner: macos-15-intel, args: '--mac --x64'}
+          - {target: win-x64, runner: windows-2025, args: '--win --x64'}
+          - {target: win-arm64, runner: windows-11-arm, args: '--win --arm64'}
+          - {target: linux-x64, runner: ubuntu-24.04, args: '--linux --x64'}
+          - {target: linux-arm64, runner: ubuntu-24.04-arm, args: '--linux --arm64'}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with: {node-version: '24'}
+      - run: npm ci
+      - run: npm run build
+      - name: Package the native installer
+        env: {CSC_IDENTITY_AUTO_DISCOVERY: 'false'}
+        run: npx electron-builder ${{ matrix.args }} --publish never
+      - name: Verify macOS image and mounted application
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          set -euo pipefail
+          DMG=$(find release -maxdepth 1 -name '*.dmg' -print -quit)
+          hdiutil verify "$DMG"
+          MOUNT=$(mktemp -d)
+          hdiutil attach -readonly -nobrowse -mountpoint "$MOUNT" "$DMG"
+          trap 'hdiutil detach "$MOUNT"' EXIT
+          APP=$(find "$MOUNT" -maxdepth 1 -name '*.app' -print -quit)
+          codesign --verify --deep --strict --verbose=2 "$APP"
+      - name: Install headless Linux display
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+      - name: Launch and verify the PACKAGED native application
+        run: node scripts/smoke-packaged.cjs
+      - run: node scripts/checksums.cjs
+      - uses: actions/upload-artifact@v7
+        with:
+          name: desktop-${{ matrix.target }}
+          path: |
+            artifacts/*
+            release/smoke-*.png
+          if-no-files-found: error
+  publish:
+    needs: desktop
+    runs-on: ubuntu-24.04
+    env: {GH_TOKEN: '${{ github.token }}'}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: desktop-*
+          path: artifacts
+          merge-multiple: true
+      - name: Publish all six verified installers together
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG=v$(node -p "require('./package.json').version")
+          PRODUCT=$(node -p "require('./package.json').productName")
+          COUNT=$(find artifacts -maxdepth 1 -type f \( -name '*.exe' -o -name '*.dmg' -o -name '*.AppImage' \) | wc -l)
+          test "$COUNT" -eq 6
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            test "$(gh release view "$TAG" --json isDraft --jq .isDraft)" = true || { echo 'This version is already published. Bump package.json and product.json.'; exit 1; }
+          else
+            gh release create "$TAG" --draft --target "$GITHUB_SHA" --title "$PRODUCT ${TAG#v}" --notes-file release-notes.md
+          fi
+          gh release upload "$TAG" artifacts/*.exe artifacts/*.dmg artifacts/*.AppImage artifacts/*.sha256 --clobber
+          gh release edit "$TAG" --draft=false
