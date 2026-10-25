@@ -34,6 +34,7 @@ Generate prompt writes a NEW, uniquely named folder under Documents/Artemis Prom
 - PROMPT.md — one readable, combined prompt with an ordered contents list
 - INDEX.md — a readable map of the included documents
 - notes/ — separate Markdown documents with ordinary relative links
+- assets/ — linked local raster images with rewritten paths
 - graph.json — roots, nodes, roles and directed include connections
 - manifest.json — SHA-256 checksums of generated files
 - Prompt.bundle.zip — all of the above for uploading to your AI assistant
