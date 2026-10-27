@@ -11,3 +11,5 @@ body{background:var(--canvas);color:var(--ink)}button,input,textarea,select{font
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:3px}input:focus,textarea:focus,select:focus{border-color:var(--accent);box-shadow:none}
 .document-toolbar,.inspector,.document-status,.graph-caption,dialog footer,.dark .document-toolbar,.dark .inspector,.dark .document-status,.dark .graph-caption,.dark dialog footer{background:var(--paper);border-color:var(--line)}
 .graph-scroller,.dark .graph-scroller,.settings-view,.dark .settings-view{background-color:var(--canvas);background-image:none}.graph-node,.dark .graph-node{background:var(--paper);border-color:var(--line)}.graph-node strong,.dark .graph-node strong{color:var(--ink)}
+
+.primary{background:var(--accent);border-color:var(--accent);color:#fff}.dark .primary{background:#0a7a37;border-color:#3fd477;color:#fff}.primary:hover{filter:brightness(.95)}#editor .cm-content{caret-color:var(--accent)}.outline button:hover{color:var(--accent)}.check-label input{accent-color:var(--accent)}
