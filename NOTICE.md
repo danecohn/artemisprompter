@@ -1,6 +1,6 @@
-# Artemis Softworks LLC
+# Cohnsoft
 
-Original application source and artwork: Artemis Softworks LLC, founded by Demetria Althea Cohn. Application source is GPL-3.0-only; see LICENSE.
+Original application source and artwork: Cohnsoft, founded by Demetria Althea Cohn. Application source is GPL-3.0-only; see LICENSE.
 
 This is an independently implemented Markdown application. It is not a fork of the proprietary Obsidian application, does not include Obsidian application code, and does not implement or run its third-party plugins. Obsidian is a trademark of its respective owner. Existing plain Markdown files can be opened without importing proprietary app settings.
 

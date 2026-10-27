@@ -1,9 +1,9 @@
 {
   "name": "artemis-prompter",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "license": "GPL-3.0-only",
-  "author": "Artemis Softworks LLC",
+  "author": "Cohnsoft",
   "main": "desktop/main.cjs",
   "scripts": {
     "build": "node scripts/build.cjs",
@@ -28,13 +28,13 @@
     "electron-builder": "26.17.0",
     "esbuild": "0.28.2"
   },
-  "productName": "Artemis Prompter",
+  "productName": "Cohnsoft Prompter",
   "description": "Write connected prompts and export readable AI-ready bundles.",
   "homepage": "https://github.com/danecohn/artemisprompter",
   "build": {
     "appId": "com.artemissoftworks.prompter",
-    "productName": "Artemis Prompter",
-    "copyright": "Copyright \u00a9 2026 Artemis Softworks LLC",
+    "productName": "Cohnsoft Prompter",
+    "copyright": "Copyright \u00a9 2026 Cohnsoft",
     "directories": {
       "output": "release"
     },
@@ -79,7 +79,7 @@
       ],
       "icon": "assets/icon.png",
       "category": "Office",
-      "maintainer": "Artemis Softworks LLC"
+      "maintainer": "Cohnsoft"
     }
   }
 }
