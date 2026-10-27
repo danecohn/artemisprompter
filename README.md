@@ -1,8 +1,10 @@
-# Cohnsoft Prompter
+<p><img src="assets/vigiltech/icons/prompter-128.png" alt="Vigil Prompter" width="96"></p>
+
+# Vigil Prompter
 
 Prompter is a local prompt-authoring workspace with directed include webs, entry prompts, reusable variables, built-in and custom slash commands, and Markdown/ZIP generation. 
 
-By **Cohnsoft**, founded by **Demetria Althea Cohn**. GPL-3.0-only.
+A product of VigilTech, [vigiltech.org](https://vigiltech.org). VigilTech was founded by Demetria Althea Cohn. GPL-3.0-only.
 
 ## Install
 
@@ -47,9 +49,8 @@ Use Node 24, npm ci, npm test, npm run build, then npm start. npm run package cr
 
 ## Future services
 
-This release is desktop-only and works offline. Web apps, MCP endpoints, sign-in, synchronization and Cohnsoft Drive integration are planned separately and are not included. The versioned local Markdown/JSON schema and stable IDs are designed to support that work without replacing your files. No Obsidian Sync or community plugins are used.
+This release is desktop-only and works offline. Web apps, MCP endpoints, sign-in, synchronization and VigilTech Drive integration are planned separately and are not included. The versioned local Markdown/JSON schema and stable IDs are designed to support that work without replacing your files. No Obsidian Sync or community plugins are used.
 
 The existing bundle/application IDs, preferences directory, vault metadata (`.artemis`),
 Markdown/graph schemas, generated bundle files and managed Documents folder remain
-compatible. Local Cohn Sans and immutable company assets are pinned to
-cohnsoftassets `752e894f90f1e58e62ae466352cb03c8bfd7d703`.
+compatible. The VigilTech design system (Golden Gate), Vigil Sans and the product icon are bundled in `assets/vigiltech/` and `assets/icon.*`; Vigil Sans is licensed under the SIL OFL 1.1.

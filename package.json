@@ -3,7 +3,7 @@
   "version": "0.1.2",
   "private": true,
   "license": "GPL-3.0-only",
-  "author": "Cohnsoft",
+  "author": "VigilTech",
   "main": "desktop/main.cjs",
   "scripts": {
     "build": "node scripts/build.cjs",
@@ -28,13 +28,13 @@
     "electron-builder": "26.17.0",
     "esbuild": "0.28.2"
   },
-  "productName": "Cohnsoft Prompter",
+  "productName": "Vigil Prompter",
   "description": "Write connected prompts and export readable AI-ready bundles.",
   "homepage": "https://github.com/danecohn/artemisprompter",
   "build": {
     "appId": "com.artemissoftworks.prompter",
-    "productName": "Cohnsoft Prompter",
-    "copyright": "Copyright \u00a9 2026 Cohnsoft",
+    "productName": "Vigil Prompter",
+    "copyright": "Copyright \u00a9 2026 VigilTech",
     "directories": {
       "output": "release"
     },
@@ -79,7 +79,7 @@
       ],
       "icon": "assets/icon.png",
       "category": "Office",
-      "maintainer": "Cohnsoft"
+      "maintainer": "VigilTech <https://vigiltech.org>"
     }
   }
 }
