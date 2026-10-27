@@ -7,3 +7,5 @@ Mac builds are ad-hoc signed and strictly verified, including the application mo
 GPL-3.0-only. Third-party notices retained. This is independent original software, not a fork or rebrand of the proprietary Obsidian application.
 
 Linked local raster images are included in generated prompt bundles, with safe rewritten paths. External images are not downloaded.
+
+VigilTech branding release 0.1.3. Existing application identifiers, local data paths and installer filenames remain compatible. Current supplied artwork and fonts are unchanged. Mac builds are ad-hoc signed and not Apple-notarized; Windows installers are unsigned.
